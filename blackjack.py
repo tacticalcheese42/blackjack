@@ -70,7 +70,6 @@ def showTable(list):
                 tempList += str(list[i][0][j])+", "
         tempList += "]"
     print("table:\n"+tempList)
-# TODO decide winner
 
 
 # main loop
