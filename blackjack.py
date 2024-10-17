@@ -54,13 +54,6 @@ def initDeck(card1, card2, hands, playerNum):
     hands.append(tempList)
 
 
-# init cards in play
-for i in range(numPlayers):
-    card1 = deck.give_first_card()
-    card2 = deck.give_first_card()
-    initDeck(card1, card2, cardsInPlay, i)
-
-
 def showTable(list):
     tempList = ""
     for i in range(len(list)):
@@ -70,6 +63,33 @@ def showTable(list):
                 tempList += str(list[i][0][j])+", "
         tempList += "]"
     print("table:\n"+tempList)
+
+
+def declareWinner(list):
+    winner = 0
+    scores = []
+    string = ""
+    for i in range(len(list)):
+        cplayer = total(list[i][0])
+        if cplayer > total(list[winner][0]):
+            winner = i
+            scores.append([i+1, -1])
+        else:
+            scores.append([i+1, cplayer])
+    for i in range(len(scores)):
+        if scores[i][1] > -1:
+            string += "Player "+str(scores[i][0])+" scored "+str(scores[i][1])+" points.\n"
+    print("The winner is player "+str(cardsInPlay[winner][1]+1))
+    print("They scored a total of " + str(total(list[winner][0])) + " points.")
+    sleep(0.7)
+    print(string)
+
+
+# init cards in play
+for i in range(numPlayers):
+    card1 = deck.give_first_card()
+    card2 = deck.give_first_card()
+    initDeck(card1, card2, cardsInPlay, i)
 
 
 # main loop
@@ -97,4 +117,5 @@ for i in range(numPlayers):
         print("Player " + str(i+1) + " done. Now player " + str(i+2))
         placeholder = input("Press [Enter] to continue.")
         system("cls")
-# TODO put winner thingy here
+
+declareWinner(cardsInPlay)
