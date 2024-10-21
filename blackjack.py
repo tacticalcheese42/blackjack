@@ -67,52 +67,6 @@ def showTable(list):
 
 
 # checks what the highest points are and displays to the users
-def declareWinner(list):
-    # sets a dummy winner, list of scores & players, and string to display
-    winner = 0
-    addWinners = []
-    winnerC = 0
-    scores = []
-    string = ""
-
-    # goes through each player and finds the total
-    for i in range(len(list)):
-        # current players total
-        cplayer = total(list[i][0])
-
-        # checks and sees if the score is higher than the current highest
-        if cplayer > total(list[winner][0]):
-            winner = i
-            winnerC += 1
-            scores.append([i+1, -1])
-
-        elif cplayer == total(list[winner][0]):
-            addWinners.append(i)
-            winnerC += 1
-            scores.append([i+1, -1])
-
-        else:
-            scores.append([i+1, cplayer])
-
-    # sets up a string of all the other players scores to display
-    for i in range(len(scores)):
-        if scores[i][1] > -1:
-            string += "Player "+str(scores[i][0])+" scored "+str(scores[i][1])+" points.\n"
-    # displays winner and all scores
-    wPlayerNum = str(cardsInPlay[winner][1]+1)
-
-    if winnerC == 1:
-        print("The winner is player " + wPlayerNum)
-    else:
-        stringW = ""
-        for i in range(len(addWinners)):
-            stringW += " and " + str(addWinners[i])
-
-        print("There was a tie. The winners are players " + wPlayerNum + stringW)
-
-    print("They scored a total of " + str(total(list[winner][0])) + " points.")
-    sleep(0.7)
-    print(string)
 
 
 # adds a deck of cards (or decks) to be used for the game
