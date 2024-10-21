@@ -21,9 +21,11 @@ def total(list):
         # add face val for all other cards
         else:
             total += list[i]
+
     # checks to see if an ace needs to be one point instead of eleven
     if total > 21 and 1 in list:
         total -= 10
+
     return total
 
 
@@ -32,6 +34,7 @@ def busted(total):
     if total > 21:
         print("You bust")
         return True
+
     return False
 
 
@@ -49,6 +52,7 @@ def initDeck(card1, card2, hands, playerNum):
 def showTable(list):
     # makes a list of all the players cards that are face up
     tempList = ""
+
     # creates each players hand as a list to add to tempList
     for i in range(len(list)):
         tempList += "["
@@ -57,6 +61,7 @@ def showTable(list):
             if j != 0:
                 tempList += str(list[i][0][j])+", "
         tempList += "]"
+
     # prints final list to the user
     print("table:\n"+tempList)
 
@@ -69,34 +74,42 @@ def declareWinner(list):
     winnerC = 0
     scores = []
     string = ""
+
     # goes through each player and finds the total
     for i in range(len(list)):
         # current players total
         cplayer = total(list[i][0])
+
         # checks and sees if the score is higher than the current highest
         if cplayer > total(list[winner][0]):
             winner = i
             winnerC += 1
             scores.append([i+1, -1])
+
         elif cplayer == total(list[winner][0]):
             addWinners.append(i)
             winnerC += 1
             scores.append([i+1, -1])
+
         else:
             scores.append([i+1, cplayer])
+
     # sets up a string of all the other players scores to display
     for i in range(len(scores)):
         if scores[i][1] > -1:
             string += "Player "+str(scores[i][0])+" scored "+str(scores[i][1])+" points.\n"
     # displays winner and all scores
     wPlayerNum = str(cardsInPlay[winner][1]+1)
+
     if winnerC == 1:
         print("The winner is player " + wPlayerNum)
     else:
         stringW = ""
         for i in range(len(addWinners)):
-            stringW += ", and " + str(addWinners[i])
+            stringW += " and " + str(addWinners[i])
+
         print("There was a tie. The winners are players " + wPlayerNum + stringW)
+
     print("They scored a total of " + str(total(list[winner][0])) + " points.")
     sleep(0.7)
     print(string)
