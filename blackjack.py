@@ -70,6 +70,7 @@ def showTable(list):
 def declareWinner(hands):
     pass
 
+
 # adds a deck of cards (or decks) to be used for the game
 deck = deck_of_cards.DeckOfCards()
 numDecks = int(input("How many decks do you want to use?\n>"))
