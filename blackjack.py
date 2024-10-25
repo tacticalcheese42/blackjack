@@ -66,8 +66,9 @@ def showTable(list):
     print("table:\n"+tempList)
 
 
-# checks what the highest points are and displays to the users
-
+# winner check stuff
+def declareWinner(hands):
+    pass
 
 # adds a deck of cards (or decks) to be used for the game
 deck = deck_of_cards.DeckOfCards()
