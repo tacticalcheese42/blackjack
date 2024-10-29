@@ -3,6 +3,12 @@ from time import sleep
 from os import system
 
 
+# Variable Declaration
+deck = 0
+numPlayers = 0
+cardsInPlay = []
+
+
 # FUNCTIONS
 
 # checks if the player has gone over 21
@@ -40,6 +46,24 @@ def declareWinner(hands):
     return [string, totals, highest]
 
 
+def initCards():
+    global deck
+
+    try:
+        # adds a deck of cards (or decks) to be used for the game
+        deck = deck_of_cards.DeckOfCards()
+        numDecks = int(input("How many decks do you want to use?\n>"))
+        # adds any additional decks
+        for i in range(numDecks):
+            deck.add_deck()
+        # shuffles deck
+        deck.shuffle_deck()
+        print("\nDeck shuffled\n")
+    except ValueError:
+        print("Sorry, thats not a valid input. Please try again.")
+        initCards()
+
+
 # deals out cards for each player
 def initDeck(card1, card2, hands, playerNum):
     # gives each player two cards
@@ -48,6 +72,25 @@ def initDeck(card1, card2, hands, playerNum):
     # gives each player a set of cards and a player number
     tempList = [[cardVal1, cardVal2], playerNum]
     hands.append(tempList)
+
+
+def initTable():
+    global numPlayers, cardsInPlay
+
+    try:
+        # initializes main list for however many players there are
+        numPlayers = int(input("How many players?\n>"))
+        # [[cards for player1, player num-1],[cards for player2, player num-1],...]
+        cardsInPlay = []
+
+        # init cards in play
+        for i in range(numPlayers):
+            card1 = deck.give_first_card()
+            card2 = deck.give_first_card()
+            initDeck(card1, card2, cardsInPlay, i)
+    except ValueError:
+        print("Sorry, that's not a valid input. Please try again.")
+        initTable()
 
 
 # Creates string displaying all other players besides the winners score.
@@ -112,26 +155,8 @@ def total(list):
 
 # INITIALIZATION
 
-# adds a deck of cards (or decks) to be used for the game
-deck = deck_of_cards.DeckOfCards()
-numDecks = int(input("How many decks do you want to use?\n>"))
-# adds any additional decks
-for i in range(numDecks):
-    deck.add_deck()
-# shuffles deck
-deck.shuffle_deck()
-print("\nDeck shuffled\n")
-
-# initializes main list for however many players there are
-numPlayers = int(input("How many players?\n>"))
-# [[cards for player1, player num-1],[cards for player2, player num-1],...]
-cardsInPlay = []
-
-# init cards in play
-for i in range(numPlayers):
-    card1 = deck.give_first_card()
-    card2 = deck.give_first_card()
-    initDeck(card1, card2, cardsInPlay, i)
+initCards()
+initTable()
 
 
 # MAIN LOOP
