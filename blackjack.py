@@ -80,7 +80,7 @@ def initTable():
     try:
         # initializes main list for however many players there are
         numPlayers = int(input("How many players?\n>"))
-        # [[cards for player1, player num-1],[cards for player2, player num-1],...]
+        # [[cards for player1, player num-1],...]
         cardsInPlay = []
 
         # init cards in play
