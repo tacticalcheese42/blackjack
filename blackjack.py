@@ -3,6 +3,87 @@ from time import sleep
 from os import system
 
 
+# FUNCTIONS
+
+# checks if the player has gone over 21
+def busted(total):
+    if total > 21:
+        print("You bust")
+        return True
+
+    return False
+
+
+# winner check stuff
+def declareWinner(hands):
+    totals = []
+    highest = 0
+    others = []
+    string = "Player "
+    for i in range(len(hands)):
+        totals.append([i, total(hands[i][0])])
+
+        if totals[i][1] > totals[highest][1]:
+            highest = i
+            others = []
+        elif totals[i][1] == totals[highest][1] and i > 0:
+            others.append(i)
+
+    string += str(totals[highest][0]+1)+" won with "
+    string += str(totals[highest][1])+" points."
+    for i in range(len(others)):
+        string += "\n"
+        string += "Player "
+        string += str(totals[others[i]][0]+1)+" also won with "
+        string += str(totals[others[i]][1])+" points."
+
+    return [string, totals, highest]
+
+
+# deals out cards for each player
+def initDeck(card1, card2, hands, playerNum):
+    # gives each player two cards
+    cardVal1 = card1.rank
+    cardVal2 = card2.rank
+    # gives each player a set of cards and a player number
+    tempList = [[cardVal1, cardVal2], playerNum]
+    hands.append(tempList)
+
+
+# Creates string displaying all other players besides the winners score.
+def otherPoints(list, winner):
+    display = ""
+
+    for i in range(len(list)):
+
+        if winner != list[i][0]:
+            display += "Player "
+            display += str(list[i][0]+1)
+            display += " scored "
+            display += str(list[i][1])
+            display += " points.\n"
+
+    return display
+
+
+# prints all of the cards that can be seen by player
+def showTable(list):
+    # makes a list of all the players cards that are face up
+    tempList = ""
+
+    # creates each players hand as a list to add to tempList
+    for i in range(len(list)):
+        tempList += "["
+        # adds all of the cards except the first
+        for j in range(len(list[i][0])):
+            if j != 0:
+                tempList += str(list[i][0][j])+", "
+        tempList += "]"
+
+    # prints final list to the user
+    print("table:\n"+tempList)
+
+
 # adds totals up for a hand
 def total(list):
     total = 0
@@ -29,47 +110,7 @@ def total(list):
     return total
 
 
-# checks if the player has gone over 21
-def busted(total):
-    if total > 21:
-        print("You bust")
-        return True
-
-    return False
-
-
-# deals out cards for each player
-def initDeck(card1, card2, hands, playerNum):
-    # gives each player two cards
-    cardVal1 = card1.rank
-    cardVal2 = card2.rank
-    # gives each player a set of cards and a player number
-    tempList = [[cardVal1, cardVal2], playerNum]
-    hands.append(tempList)
-
-
-# prints all of the cards that can be seen by player
-def showTable(list):
-    # makes a list of all the players cards that are face up
-    tempList = ""
-
-    # creates each players hand as a list to add to tempList
-    for i in range(len(list)):
-        tempList += "["
-        # adds all of the cards except the first
-        for j in range(len(list[i][0])):
-            if j != 0:
-                tempList += str(list[i][0][j])+", "
-        tempList += "]"
-
-    # prints final list to the user
-    print("table:\n"+tempList)
-
-
-# winner check stuff
-def declareWinner(hands):
-    pass
-
+# INITIALIZATION
 
 # adds a deck of cards (or decks) to be used for the game
 deck = deck_of_cards.DeckOfCards()
@@ -83,6 +124,7 @@ print("\nDeck shuffled\n")
 
 # initializes main list for however many players there are
 numPlayers = int(input("How many players?\n>"))
+# [[cards for player1, player num-1],[cards for player2, player num-1],...]
 cardsInPlay = []
 
 # init cards in play
@@ -92,7 +134,7 @@ for i in range(numPlayers):
     initDeck(card1, card2, cardsInPlay, i)
 
 
-# main loop
+# MAIN LOOP
 for i in range(numPlayers):
     showTable(cardsInPlay)
     hand = cardsInPlay[i][0]
@@ -118,4 +160,6 @@ for i in range(numPlayers):
         placeholder = input("Press [Enter] to continue.")
         system("cls")
 
-declareWinner(cardsInPlay)
+winner = declareWinner(cardsInPlay)
+print(winner[0])
+print(otherPoints(winner[1], winner[2]))
