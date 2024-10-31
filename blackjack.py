@@ -29,7 +29,7 @@ def declareWinner(hands):
     for i in range(len(hands)):
         totals.append([i, total(hands[i][0])])
 
-        if totals[i][1] > totals[highest][1]:
+        if totals[i][1] > totals[highest][1] and totals[i][1] <= 21:
             highest = i
             others = []
         elif totals[i][1] == totals[highest][1] and i > 0:
@@ -168,7 +168,7 @@ for i in range(numPlayers):
     print("Your total is: " + str(total(hand)))
     while True:
         hos = input("hit or stay?\n>")
-        if hos.lower().startswith('h'):
+        if hos.lower().startswith('hit'):
             card = deck.give_first_card()
             hand.append(card.rank)
             print(hand)
@@ -177,8 +177,11 @@ for i in range(numPlayers):
                 sleep(1)
                 break
             sleep(1)
-        else:
+        elif hos.lower().startswith('stay'):
             break
+        else:
+            print("Sorry, thats not a vaild input, please try again.")
+            sleep(1)
     system("cls")
     if i < numPlayers - 1:
         print("Player " + str(i+1) + " done. Now player " + str(i+2))
