@@ -119,8 +119,12 @@ def showTable(list):
         tempList += "["
         # adds all of the cards except the first
         for j in range(len(list[i][0])):
-            if j != 0:
+            if j == len(list[i][0])-1:
+                tempList += str(list[i][0][j])
+            elif j != 0:
                 tempList += str(list[i][0][j])+", "
+            else:
+                tempList += "?, "
         tempList += "]"
 
     # prints final list to the user
